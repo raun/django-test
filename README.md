@@ -3,14 +3,14 @@ A simple Django application to allow daily checkins and monitoring of your teams
 
 ## Requirements
 
-Create a simple Django application that:
+Create a simple Django **RESTful** application that:
 
-1. Allows a user to login.
-2. Once per day, users are asked for the happiness level from 1 (Unhappy) to 3 (Neutral) to 5 (Very Happy)
-3. After they have entered their happiness level or upon any return visit, shows a statistics page.
-4. The statistics page anonymously displays the number of people at each level and the average happiness of the team.
+1. Provides an API that allows users make authenticated requests.
+2. Once per day, users can submit their happiness level from 1 (Unhappy) to 3 (Neutral) to 5 (Very Happy).
+3. Upon receiving the request, return the statistics information: number of people at each level and the average happiness of the team.
+4. If an unauthenticated request is made to the same endpoint, return the stastistics.
 5. New users can be added via the Django admin.
-6. Bonus: SaaS! Users can belong to teams and only their teams stats are shown.
+6. Bonus: SaaS! Users can belong to teams and only their teams stats are returned.
 
 ## Guidelines
 
