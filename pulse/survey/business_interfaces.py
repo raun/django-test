@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.db.models import Avg
@@ -7,7 +9,7 @@ from survey.models import UserResponse, HappinessLevel
 
 
 class SurveySubmissionInterface(object):
-    def __init__(self, username, happiness_value):
+    def __init__(self, username: str, happiness_value: int) -> None:
         """
         Args:
             username: username of the user who is trying to add rating
@@ -16,7 +18,7 @@ class SurveySubmissionInterface(object):
         self.user = User.objects.filter(username=username).first()
         self.happiness_value = happiness_value
 
-    def save(self):
+    def save(self) -> tuple:
         """
 
         Returns: A tuple with 2 elements, first one is the status, second one is created instance in case it succeed.
@@ -38,7 +40,7 @@ class SurveySubmissionInterface(object):
 
 
 class StatisticSummaryInterface(object):
-    def __init__(self, username, interested_date):
+    def __init__(self, username: str, interested_date: date) -> None:
         """
         Args:
             username: username of the user who is trying to get the statistic, empty string in case of AnonymousUser
@@ -48,7 +50,7 @@ class StatisticSummaryInterface(object):
         self.analytics_date = interested_date
         self.stats = None
 
-    def calculate_frequency_distribution(self):
+    def calculate_frequency_distribution(self) -> dict:
         """
         Returns: a dictionary with keys as happiness level names and value as the count of each rating
                 empty dictionary in case there are no happiness level exists in the system
@@ -61,7 +63,7 @@ class StatisticSummaryInterface(object):
             result[level.name] = level_count
         return result
 
-    def calculate_average_happiness_of_team(self):
+    def calculate_average_happiness_of_team(self) -> dict:
         """
         Returns: a dictionary with keys as groups name the user belong to and value as the average group happiness.
             if user is not present it gives the happiness of the whole team
@@ -84,7 +86,7 @@ class StatisticSummaryInterface(object):
                 result["all"] = team_average.first().average_happiness
         return result
 
-    def calculate_summary(self):
+    def calculate_summary(self) -> dict:
         """
         Returns: a dictionary containing the combined summary of statistic.
 

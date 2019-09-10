@@ -2,7 +2,7 @@ import re
 import time
 
 
-def file_upload_to(instance, folder, filename):
+def file_upload_to(instance, folder: str, filename: str) -> str:
     """
     Helper function to specify where the file should be uploaded
     Append current timestamp so that re-uploading file with same name does replace old file.
