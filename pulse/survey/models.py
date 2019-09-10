@@ -1,12 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from survey.helpers import file_upload_to
-
-
-def happiness_level_image_dir(instance, filename):
-    return file_upload_to(instance, 'level_images', filename)
-
 
 class HappinessLevel(models.Model):
     """
@@ -14,8 +8,6 @@ class HappinessLevel(models.Model):
     """
     name = models.CharField(max_length=150)
     value = models.IntegerField(unique=True, default=0)
-    image = models.ImageField(null=True, blank=True, upload_to=happiness_level_image_dir,
-                              help_text="NOTE: Make sure the dimensions of the image are in the ratio 1:1.")
 
     class Meta:
         db_table = 'HAPPINESS_LEVEL'
