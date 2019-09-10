@@ -7,7 +7,7 @@ SECRET_KEY = '--hg(fb6pc5fpk#1)aqe200&5!4ezy)7$z%xi^q_^m9w(#oeq%'
 
 DB_USER = get_env_variable('DB_USER')
 DB_PASS = get_env_variable('DB_PASS')
-DB_NAME = get_env_variable('DB_NAME', 'django_learned')
+DB_NAME = get_env_variable('DB_NAME', 'django_pulse')
 DB_HOST = get_env_variable('DB_HOST', '127.0.0.1')
 DB_PORT = get_env_variable('DB_PORT', '')
 
