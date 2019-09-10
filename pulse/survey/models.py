@@ -29,8 +29,8 @@ class UserResponse(models.Model):
     Table to store the user response on daily basis.
     Unique together constraint so a user can not submit a response twice in a day.
     """
-    happiness_level = models.ForeignKey(to=HappinessLevel, on_delete=models.PROTECT)
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True)
+    happiness_level = models.ForeignKey(to=HappinessLevel, on_delete=models.PROTECT, related_name="responses")
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True, related_name="responses")
     input_date = models.DateField(auto_now_add=True)
 
     class Meta:

@@ -1,21 +1,29 @@
 from copy import deepcopy
 
-from rest_framework import permissions, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from survey.serializers import UserResponseSerializer
+from survey import error_status
+from survey.serializers import UserResponseSerializer, StatisticSerializer
 
 
-class SubmitPulseSurvey(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
+class SubmitPulseSurveyView(APIView):
     serializer_class = UserResponseSerializer
+    stat_serializer_class = StatisticSerializer
 
     def post(self, request, format=None):
         data = deepcopy(request.data)
-        data.update(user=request.user.id)
-        serializer = self.serializer_class(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        username = request.user.username
+        if username is not '':
+            data.update(username=username)
+            serializer = self.serializer_class(data=data)
+            if serializer.is_valid():
+                instance = serializer.save()
+                if instance == error_status.INTEGRITY_ERROR or instance == error_status.HAPPINESS_LEVEL_DOES_NOT_EXIST:
+                    return Response({"error_code": instance}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        stat_serializer = self.stat_serializer_class(request.user)
+        return Response(stat_serializer.data, status=status.HTTP_201_CREATED)
+
