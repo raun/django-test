@@ -24,6 +24,7 @@ class SubmitPulseSurveyView(APIView):
                     return Response({"error_code": instance}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         stat_serializer = self.stat_serializer_class(request.user)
         return Response(stat_serializer.data, status=status.HTTP_201_CREATED)
 

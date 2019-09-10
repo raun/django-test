@@ -32,11 +32,11 @@ class StatisticSerializer(serializers.Serializer):
     average = serializers.SerializerMethodField()
 
     def get_frequency(self, obj):
-        stats = StatisticSummaryInterface(username=obj.username, a_date=datetime.today().date())
+        stats = StatisticSummaryInterface(username=obj.username, interested_date=datetime.today().date())
         return stats.calculate_frequency_distribution()
 
     def get_average(self, obj):
-        stats = StatisticSummaryInterface(username=obj.username, a_date=datetime.today().date())
+        stats = StatisticSummaryInterface(username=obj.username, interested_date=datetime.today().date())
         return stats.calculate_average_happiness_of_team()
 
 

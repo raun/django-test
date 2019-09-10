@@ -1,7 +1,5 @@
 from .base import *
 
-from pulse.pulse.project_settings.base import get_env_variable
-
 DEBUG = False
 SECRET_KEY = '--hg(fb6pc5fpk#1)aqe200&5!4ezy)7$z%xi^q_^m9w(#oeq%'
 

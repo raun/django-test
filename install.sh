@@ -40,5 +40,8 @@ fi
 echo "Setting up Pulse"
 echo "Migrating the database schema"
 python ./pulse/manage.py migrate
+echo "Populating Happiness Level"
+python ./pulse/manage.py populate_happiness_level
+echo "Creating Super User"
 python ./pulse/manage.py createsuperuser
 echo "Done"

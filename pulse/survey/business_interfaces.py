@@ -38,14 +38,14 @@ class SurveySubmissionInterface(object):
 
 
 class StatisticSummaryInterface(object):
-    def __init__(self, username, a_date):
+    def __init__(self, username, interested_date):
         """
         Args:
             username: username of the user who is trying to get the statistic, empty string in case of AnonymousUser
-            a_date: date for which statistics are requested
+            interested_date: date for which statistics are requested
         """
         self.user = User.objects.filter(username=username).first()
-        self.analytics_date = a_date
+        self.analytics_date = interested_date
         self.stats = None
 
     def calculate_frequency_distribution(self):
