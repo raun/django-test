@@ -123,3 +123,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+}
+
