@@ -1,5 +1,13 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
+
+
+class TimeStampedModel(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
 
 
 class HappinessLevel(models.Model):
@@ -16,13 +24,13 @@ class HappinessLevel(models.Model):
         return '{} {}'.format(self.name, self.value)
 
 
-class UserResponse(models.Model):
+class UserResponse(TimeStampedModel):
     """
     Table to store the user response on daily basis.
     Unique together constraint so a user can not submit a response twice in a day.
     """
     happiness_level = models.ForeignKey(to=HappinessLevel, on_delete=models.PROTECT, related_name="responses")
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True, related_name="responses")
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name="responses")
     input_date = models.DateField(auto_now_add=True)
 
     class Meta:
