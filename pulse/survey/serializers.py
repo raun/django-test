@@ -2,6 +2,7 @@ from rest_framework import serializers
 from datetime import datetime
 
 from survey.business_interfaces import SurveySubmissionInterface, StatisticSummaryInterface
+from survey.models import HappinessLevel
 
 
 class UserResponseSerializer(serializers.Serializer):
@@ -40,3 +41,10 @@ class StatisticSerializer(serializers.Serializer):
         return stats.calculate_average_happiness_of_team()
 
 
+class HappinessLevelSerializer(serializers.ModelSerializer):
+    """
+        Serializer for getting the Happiness Levels available in the application
+    """
+    class Meta:
+        model = HappinessLevel
+        fields = ('name', 'value', )

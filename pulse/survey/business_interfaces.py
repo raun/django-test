@@ -2,7 +2,7 @@ from datetime import date
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.db.models import Avg
+from django.db.models import Avg, QuerySet
 
 from survey import error_status
 from survey.models import UserResponse, HappinessLevel
@@ -94,3 +94,12 @@ class StatisticSummaryInterface(object):
         self.stats = {"frequency": self.calculate_frequency_distribution(),
                       "average": self.calculate_average_happiness_of_team(), }
         return self.stats
+
+
+class HappinessLevelInterface(object):
+    def get_all_active_level(self) -> QuerySet:
+        """
+        Returns: A queryset of HappinessLevel models.
+
+        """
+        return HappinessLevel.objects.all()
