@@ -86,6 +86,10 @@ The top level directory has 2 files to help install and run the server:
 2. Run install.sh using ```./install.sh```
 3. Run run_server using ```./run_server.sh```
 
-## Testing Done
 
 ## Future Improvements
+This is a Minimal Viable Product. I would probably take up the following tasks in future interations:
+1. Using automated deployment using tools like Ansible
+2. Supporting HappinessLevel to also store images corresponding to each happiness level
+3. Decouple analytics from the survey collection
+4. Support more response types
