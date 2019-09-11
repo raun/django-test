@@ -5,8 +5,35 @@ A simple Django application to allow daily checkins and monitoring of your teams
 1. A user can be part of one or more groups.
 2. Statistic is calculated for the current day only.
 
+## Installation instructions
+Pre-requisite system installations:
+1. Python 3.5
+2. SQLite3
+3. Virtualenv
+
+The top level directory has 2 files to help install and run the server:
+* install.sh
+> * Check for pre-requisite system installation.  
+> * Creates the virtual environment in the current directory.
+> * Install all the requirements from the project into the newly created virtual environment
+> * Run the migration needed for the application
+> * Create the Happiness Levels for the application
+> * Create a super user for the application
+
+* run_server.sh
+> * Activate the virtual environment created by install.sh
+> * Setup the environment variable needed by the application
+> * Run the django Development server
+
+#### To run the project:
+1. Deactivate from any current virtual environment
+2. Run install.sh using ```./install.sh```
+3. Run run_server using ```./run_server.sh```
+
 ## API Contract
-**Endpoint**: /survey/api/submit  
+
+### API for Submitting Rating
+**Endpoint**: /survey/api/submit/  
 **Methods Allowed**: POST  
 **Body**:
 > raw = ```{"happiness_value": number}```  
@@ -60,31 +87,73 @@ Status Code: 200(OK)
 }
 ```
 
+### APIs for getting Auth token
 
-## Installation instructions
-Pre-requisite system installations:
-1. Python 3.5
-2. SQLite3
-3. Virtualenv
+**Endpoint**: /auth-login/  
+**Methods Allowed**: POST  
+**Body**:
+> raw = ```{"username": "username", "password": "password"}```  
+> Content-type = application/json
 
-The top level directory has 2 files to help install and run the server:
-* install.sh
-> * Check for pre-requisite system installation.  
-> * Creates the virtual environment in the current directory.
-> * Install all the requirements from the project into the newly created virtual environment
-> * Run the migration needed for the application
-> * Create the Happiness Levels for the application
-> * Create a super user for the application
+**Responses**:
+```json
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFuc2h1bCIsImVtYWlsIjoiYW5zaHVsQHNwcmluZ2JvYXJkLmNvbSIsInVzZXJfaWQiOjEsImV4cCI6MTU2ODIzNDkzNH0.aS8noBjaNw5lJX0GnLvk-eVao8seuMbOZ5XcqKr0Wp4"
+}
+```
 
-* run_server.sh
-> * Activate the virtual environment created by install.sh
-> * Setup the environment variable needed by the application
-> * Run the django Development server
+**Endpoint**: /auth-refresh/  
+**Methods Allowed**: POST  
+**Body**:
+> raw = ```{"token": "token"}```  
+> Content-type = application/json
 
-#### To run the project:
-1. Deactivate from any current virtual environment
-2. Run install.sh using ```./install.sh```
-3. Run run_server using ```./run_server.sh```
+**Responses**:
+```json
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFuc2h1bCIsImVtYWlsIjoiYW5zaHVsQHNwcmluZ2JvYXJkLmNvbSIsInVzZXJfaWQiOjEsImV4cCI6MTU2ODIzNDkzNH0.aS8noBjaNw5lJX0GnLvk-eVao8seuMbOZ5XcqKr0Wp4"
+}
+```
+
+### API for getting Available Happiness Level
+**Endpoint**: /survey/api/get-levels/  
+**Methods Allowed**: GET  
+
+**Responses**:
+```json
+[
+    {
+        "name": "Unhappy",
+        "value": 1
+    },
+    {
+        "name": "Neutral",
+        "value": 3
+    },
+    {
+        "name": "Very Happy",
+        "value": 5
+    }
+]
+```
+
+### API for getting Statistic for whole team
+**Endpoint**: /survey/api/get-stastics 
+**Methods Allowed**: GET  
+
+**Responses**:
+```json
+{
+    "frequency": {
+        "Unhappy": 0,
+        "Very Happy": 0,
+        "Neutral": 1
+    },
+    "average": {
+        "all": 3.0
+    }
+}
+```
 
 
 ## Future Improvements
