@@ -13,6 +13,7 @@ if pip freeze | grep "virtualenv" > /dev/null; then
     echo "Virtualenv exists"
 else
     echo "Install Virtualenv using sudo pip install virtualenv==16.7.4"
+    EXIT_CODE=1
 fi
 
 if command -v sqlite3 &>/dev/null; then
